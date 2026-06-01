@@ -34,3 +34,8 @@ jobs:
         if: ${{ always() }}
         run: |
           echo "Job status: ${{ job.status }}" >> $GITHUB_STEP_SUMMARY
+
+      - name: Trigger Render deployment
+        if: success()
+        run: |
+          curl https://api.render.com/deploy/srv-${{ secrets.RENDER_SERVICE_ID }}?key=${{ secrets.RENDER_API_KEY }}
